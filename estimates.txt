@@ -1,0 +1,37 @@
+1. Minimum RTO for a single AZ outage: 
+If a planned or unplanned outage of your DB instance results from an infrastructure defect, Amazon RDS
+automatically switches to a standby replica in another Availability Zone if you have turned on Multi-AZ.
+The time that it takes for the failover to complete depends on the database activity and other conditions
+at the time the primary DB instance became unavailable. Failover times are typically 60–120 seconds.
+However, large transactions or a lengthy recovery process can increase failover time. When the failover is
+complete, it can take additional time for the RDS console to reflect the new Availability Zone
+
+ref: https://docs.aws.amazon.com/pdfs/AmazonRDS/latest/UserGuide/rds-ug.pdf#Concepts.MultiAZ
+
+Total time: 2 minutes
+
+2. Minimum RTO for a single region outage: 
+In the event of a single-region outage, the process involves starting up a new Amazon RDS instance and applying all changes since the last backup. 
+This restoration process might take around 30 minutes to 1 hour, depending on the size of the database, the number of changes made since the last backup, and the workload levels. 
+Manual steps include:
+- Using an existing replica and promoting it to the master
+- Reconfiguring the application to point to the new DB instance.
+
+Total time: 60 minutes
+
+3. Minimum RPO for a single AZ outage: 
+Data loss is minimal during a single AZ outage due to the presence of a synchronized secondary instance. 
+As a result, the Recovery Point Objective (RPO) is effectively zero, and no substantial data loss is expected.
+
+ref: https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-database-disaster-recovery/choosing-database.html
+
+4. Minimum RPO for a single region outage: 
+The RDS architecture provides frequent transaction log backups every 5 minutes, resulting in an RPO of about 5 minutes. 
+However, the time it takes to restore from these backups can vary based on factors such as the size of the database, the number of changes made since the last backup, and the workload on the database. 
+Including the time for restoration and potential application configuration changes, the total time for this process could be around 10 to 30 minutes.
+
+Total time: 30 minutes
+
+In conclusion, the Multi-AZ, multi-region database architecture offers improved disaster recovery capabilities and high availability. 
+The RTO and RPO estimates provided take into account the various stages of failover, restoration, and application reconfiguration. 
+While the estimates may vary based on specific conditions and factors, this architecture is well-suited for applications that require both rapid recovery and minimal data loss in the face of localized or regional disruptions.
