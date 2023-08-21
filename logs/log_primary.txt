@@ -1,0 +1,60 @@
+congdinh@CONGs-MacBook-Pro aws-cloud-architect-udacity-prj1-recoverability % ssh -i ~/.ssh/id_rsa ec2-user@44.205.18.174
+   ,     #_
+   ~\_  ####_        Amazon Linux 2023
+  ~~  \_#####\
+  ~~     \###|
+  ~~       \#/ ___   https://aws.amazon.com/linux/amazon-linux-2023
+   ~~       V~' '->
+    ~~~         /
+      ~~._.   _/
+         _/ _/
+       _/m/'
+Last login: Mon Aug 21 03:59:11 2023 from 116.101.53.100
+[ec2-user@ip-10-1-11-167 ~]$ mysql -u udacity -h udacityprj1-rds.c8hfbphxdiu1.us-east-1.rds.amazonaws.com -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 39
+Server version: 8.0.33 Source distribution
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE TodoApp;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> Show Databases;
++--------------------+
+| Database           |
++--------------------+
+| TodoApp            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> USE TodoApp;
+Database changed
+mysql> CREATE TABLE Todo(ID INT PRIMARY KEY, Title NVARCHAR(50) NOT NULL, IsCompleted BIT DEFAULT 0);
+Query OK, 0 rows affected, 1 warning (0.08 sec)
+
+mysql> INSERT INTO Todo(ID, Title, IsCompleted) VALUES (1, 'Learning English', 0), (2, 'Learning AWS', 0);
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Todo;
++----+------------------+--------------------------+
+| ID | Title            | IsCompleted              |
++----+------------------+--------------------------+
+|  1 | Learning English | 0x00                     |
+|  2 | Learning AWS     | 0x00                     |
++----+------------------+--------------------------+
+2 rows in set (0.00 sec)
+
+mysql> 

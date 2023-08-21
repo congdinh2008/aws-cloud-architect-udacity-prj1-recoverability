@@ -1,0 +1,66 @@
+congdinh@CONGs-MacBook-Pro aws-cloud-architect-udacity-prj1-recoverability % ssh -i ~/.ssh/id_rsa ec2-user@54.70.155.23
+   ,     #_
+   ~\_  ####_        Amazon Linux 2023
+  ~~  \_#####\
+  ~~     \###|
+  ~~       \#/ ___   https://aws.amazon.com/linux/amazon-linux-2023
+   ~~       V~' '->
+    ~~~         /
+      ~~._.   _/
+         _/ _/
+       _/m/'
+Last login: Mon Aug 21 04:11:58 2023 from 116.101.53.100
+[ec2-user@ip-10-2-11-220 ~]$ mysql -u udacity -h udacityprj1-rds-standby.cawuhxt7z1jf.us-west-2.rds.amazonaws.com -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 29
+Server version: 8.0.33 Source distribution
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| TodoApp            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> USE TodoApp;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> SELECT * FROM Todo;
++----+------------------+--------------------------+
+| ID | Title            | IsCompleted              |
++----+------------------+--------------------------+
+|  1 | Learning English | 0x00                     |
+|  2 | Learning AWS     | 0x00                     |
++----+------------------+--------------------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Todo(ID, Title, IsCompleted) VALUES (3, 'Learning Azure', 0), (4, 'Learning GCP', 0);
+ERROR 1290 (HY000): The MySQL server is running with the --read-only option so it cannot execute this statement
+mysql> INSERT INTO Todo(ID, Title, IsCompleted) VALUES (3, 'Learning Azure', 0), (4, 'Learning GCP', 0);
+ERROR 1290 (HY000): The MySQL server is running with the --read-only option so it cannot execute this statement
+mysql> SELECT * FROM Todo;
++----+------------------+--------------------------+
+| ID | Title            | IsCompleted              |
++----+------------------+--------------------------+
+|  1 | Learning English | 0x00                     |
+|  2 | Learning AWS     | 0x00                     |
++----+------------------+--------------------------+
+2 rows in set (0.00 sec)
+
+mysql> 
