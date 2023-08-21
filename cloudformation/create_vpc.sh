@@ -18,7 +18,8 @@ case $ACTION in
 
   delete)
     aws cloudformation delete-stack \
-    --stack-name $1
+    --stack-name $1 \
+    --region=$5
     ;;
 
   *)
